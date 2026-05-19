@@ -57,7 +57,7 @@ export default function QuoteForm() {
   if (submitted) {
     return (
       <div className="text-center py-12">
-        <CheckCircle className="mx-auto mb-4 text-green-cta" size={56} />
+        <CheckCircle className="mx-auto mb-4 text-[#C9922A]" size={56} />
         <h3 className="text-2xl font-bold text-ink mb-3" style={{ fontFamily: "var(--font-cormorant)" }}>
           Thank You!
         </h3>
@@ -66,7 +66,7 @@ export default function QuoteForm() {
         </p>
         <p className="text-ink font-semibold">
           Call now to receive $100 off your first payment:{" "}
-          <a href="tel:8662957500" className="text-teal-lt hover:underline">866-295-7500</a>
+          <a href="tel:8662957500" className="text-[#C9922A] hover:underline">866-295-7500</a>
         </p>
       </div>
     );
@@ -77,25 +77,25 @@ export default function QuoteForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-ink mb-1">First Name *</label>
-          <input name="firstName" type="text" required placeholder="John" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="firstName" type="text" required placeholder="John" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
         </div>
         <div>
           <label className="block text-sm font-medium text-ink mb-1">Last Name *</label>
-          <input name="lastName" type="text" required placeholder="Smith" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="lastName" type="text" required placeholder="Smith" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
         </div>
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Email Address *</label>
-        <input name="email" type="email" required placeholder="john@example.com" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="email" type="email" required placeholder="john@example.com" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-ink mb-1">Phone Number *</label>
-          <input name="phone" type="tel" required placeholder="(555) 000-0000" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="phone" type="tel" required placeholder="(555) 000-0000" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
         </div>
         <div>
           <label className="block text-sm font-medium text-ink mb-1">Zip Code *</label>
-          <input name="zip" type="text" required placeholder="92612" maxLength={5} className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="zip" type="text" required placeholder="92612" maxLength={5} className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
         </div>
       </div>
 
@@ -109,20 +109,20 @@ export default function QuoteForm() {
                 placeholder={`Creditor ${i + 1} Name`}
                 value={creditor.name}
                 onChange={(e) => updateCreditor(i, "name", e.target.value)}
-                className="border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors"
+                className="border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors"
               />
               <input
                 type="text"
                 placeholder="Balance ($)"
                 value={creditor.balance}
                 onChange={(e) => updateCreditor(i, "balance", e.target.value)}
-                className="border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors"
+                className="border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors"
               />
             </div>
           ))}
         </div>
         {creditors.length < 4 && (
-          <button type="button" onClick={addCreditor} className="mt-3 flex items-center gap-2 text-teal text-sm font-medium hover:text-teal-lt transition-colors">
+          <button type="button" onClick={addCreditor} className="mt-3 flex items-center gap-2 text-[#C9922A] text-sm font-medium hover:text-[#A87820] transition-colors">
             <PlusCircle size={18} /> Add Another Creditor
           </button>
         )}
@@ -137,7 +137,7 @@ export default function QuoteForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-4 rounded bg-green-cta text-white font-bold text-lg hover:bg-[#43a047] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full py-4 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? "Submitting..." : "Get My Quote"}
       </button>

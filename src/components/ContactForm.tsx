@@ -40,7 +40,7 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <div className="text-center py-8">
-        <CheckCircle className="mx-auto mb-4 text-green-cta" size={48} />
+        <CheckCircle className="mx-auto mb-4 text-[#C9922A]" size={48} />
         <h3 className="text-xl font-bold text-ink mb-2" style={{ fontFamily: "var(--font-cormorant)" }}>Message Sent!</h3>
         <p className="text-ink-mid">We’ll be in touch within 24 hours.</p>
       </div>
@@ -51,25 +51,25 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Name *</label>
-        <input name="name" type="text" required placeholder="Your full name" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="name" type="text" required placeholder="Your full name" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Email *</label>
-        <input name="email" type="email" required placeholder="you@example.com" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="email" type="email" required placeholder="you@example.com" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Phone</label>
-        <input name="phone" type="tel" placeholder="(555) 000-0000" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="phone" type="tel" placeholder="(555) 000-0000" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Message *</label>
-        <textarea name="message" required rows={4} placeholder="How can we help you?" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors resize-none" />
+        <textarea name="message" required rows={4} placeholder="How can we help you?" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors resize-none" />
       </div>
       {error && <p className="text-red-600 text-sm">{error}</p>}
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3 rounded bg-teal text-white font-bold hover:bg-teal-lt transition-all hover:-translate-y-0.5 shadow disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full py-3 rounded bg-[#C9922A] text-white font-bold hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? "Sending..." : "Send Message"}
       </button>

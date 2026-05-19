@@ -30,11 +30,11 @@ export default function InlineQuoteForm() {
   if (submitted) {
     return (
       <div className="text-center py-6">
-        <CheckCircle className="mx-auto mb-3 text-green-cta" size={44} />
-        <p className="font-bold text-ink text-lg">We’ll be in touch within 24 hours.</p>
+        <CheckCircle className="mx-auto mb-3 text-[#C9922A]" size={44} />
+        <p className="font-bold text-ink text-lg">We'll be in touch within 24 hours.</p>
         <p className="text-ink-mid text-sm mt-1">
           Questions?{" "}
-          <a href="tel:8662957500" className="text-teal-lt hover:underline font-semibold">Call 866-295-7500</a>
+          <a href="tel:8662957500" className="text-[#C9922A] hover:underline font-semibold">Call 866-295-7500</a>
         </p>
       </div>
     );
@@ -43,15 +43,15 @@ export default function InlineQuoteForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="grid grid-cols-2 gap-3">
-        <input name="firstName" type="text" required placeholder="First Name" className="border border-warm-line rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-teal transition-colors w-full" />
-        <input name="lastName" type="text" required placeholder="Last Name" className="border border-warm-line rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-teal transition-colors w-full" />
+        <input name="firstName" type="text" required placeholder="First Name" className="border border-[#E8E2D9] rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-[#C9922A] transition-colors w-full" />
+        <input name="lastName" type="text" required placeholder="Last Name" className="border border-[#E8E2D9] rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-[#C9922A] transition-colors w-full" />
       </div>
-      <input name="email" type="email" required placeholder="Email Address" className="w-full border border-warm-line rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-teal transition-colors" />
-      <input name="phone" type="tel" required placeholder="Phone Number" className="w-full border border-warm-line rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-teal transition-colors" />
+      <input name="email" type="email" required placeholder="Email Address" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-[#C9922A] transition-colors" />
+      <input name="phone" type="tel" required placeholder="Phone Number" className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink text-sm focus:outline-none focus:border-[#C9922A] transition-colors" />
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3.5 rounded bg-green-cta text-white font-bold text-base hover:bg-[#43a047] transition-all hover:-translate-y-0.5 shadow-md disabled:opacity-60"
+        className="w-full py-3.5 rounded bg-[#C9922A] text-white font-bold text-base hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-md disabled:opacity-60"
       >
         {loading ? "Submitting..." : "Get My Free Quote"}
       </button>

@@ -24,14 +24,14 @@ export default function Footer() {
                 PACIFIC
               </span>
               <span
-                className="block font-bold tracking-[0.18em] text-xl text-teal-lt"
+                className="block font-bold tracking-[0.18em] text-xl text-[#E5B04A]"
                 style={{ fontFamily: "var(--font-cormorant)" }}
               >
                 ASSOCIATES
               </span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed">
-              One of the nation’s highest rated debt consolidation companies for over two decades.
+              One of the nation&apos;s highest rated debt consolidation companies for over two decades.
             </p>
           </div>
 
@@ -42,7 +42,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-white/50 hover:text-teal-lt text-sm transition-colors"
+                  className="text-white/50 hover:text-[#E5B04A] text-sm transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -55,12 +55,12 @@ export default function Footer() {
             <address className="not-italic text-sm text-white/50 leading-relaxed space-y-2">
               <p>19900 MacArthur Blvd Suite 890<br />Irvine, CA 92612</p>
               <p>
-                <a href="tel:9492506700" className="hover:text-teal-lt transition-colors">
+                <a href="tel:9492506700" className="hover:text-[#E5B04A] transition-colors">
                   949-250-6700
                 </a>
               </p>
               <p>
-                <a href="mailto:info@pacificassociates.com" className="hover:text-teal-lt transition-colors break-all">
+                <a href="mailto:info@pacificassociates.com" className="hover:text-[#E5B04A] transition-colors break-all">
                   info@pacificassociates.com
                 </a>
               </p>

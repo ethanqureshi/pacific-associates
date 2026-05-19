@@ -19,14 +19,14 @@ export default function ContactPage() {
         </FadeUp>
       </section>
 
-      <section className="bg-cream py-16 px-4">
+      <section className="bg-[#F3F0EB] py-16 px-4">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
           <FadeUp>
-            <div className="bg-white rounded-xl shadow-sm border border-warm-line p-8 h-full">
+            <div className="bg-white rounded-xl shadow-sm border border-[#E8E2D9] p-8 h-full">
               <h2 className="text-3xl font-bold text-navy mb-7">Corporate Headquarters</h2>
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <MapPin className="text-teal flex-shrink-0 mt-0.5" size={22} />
+                  <MapPin className="text-[#C9922A] flex-shrink-0 mt-0.5" size={22} />
                   <div>
                     <p className="font-semibold text-ink mb-1">Address</p>
                     <address className="not-italic text-ink-mid leading-relaxed">
@@ -35,24 +35,24 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <Phone className="text-teal flex-shrink-0 mt-0.5" size={22} />
+                  <Phone className="text-[#C9922A] flex-shrink-0 mt-0.5" size={22} />
                   <div>
                     <p className="font-semibold text-ink mb-1">Telephone</p>
-                    <a href="tel:9492506700" className="text-teal-lt hover:underline">949-250-6700</a>
+                    <a href="tel:9492506700" className="text-[#C9922A] hover:underline">949-250-6700</a>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <Printer className="text-teal flex-shrink-0 mt-0.5" size={22} />
+                  <Printer className="text-[#C9922A] flex-shrink-0 mt-0.5" size={22} />
                   <div>
                     <p className="font-semibold text-ink mb-1">Fax</p>
                     <p className="text-ink-mid">949-250-1768</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <Mail className="text-teal flex-shrink-0 mt-0.5" size={22} />
+                  <Mail className="text-[#C9922A] flex-shrink-0 mt-0.5" size={22} />
                   <div>
                     <p className="font-semibold text-ink mb-1">Email</p>
-                    <a href="mailto:info@pacificassociates.com" className="text-teal-lt hover:underline break-all">
+                    <a href="mailto:info@pacificassociates.com" className="text-[#C9922A] hover:underline break-all">
                       info@pacificassociates.com
                     </a>
                   </div>

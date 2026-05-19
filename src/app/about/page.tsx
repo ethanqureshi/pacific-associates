@@ -58,14 +58,14 @@ export default function AboutPage() {
               We work with all major credit card companies and can eliminate these high interest rates to get you back on track.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <div className="flex items-center gap-3 bg-teal-pale rounded-lg px-5 py-4">
-                <Award className="text-teal flex-shrink-0" size={30} />
+              <div className="flex items-center gap-3 bg-[#FDF6E9] rounded-lg px-5 py-4">
+                <Award className="text-[#C9922A] flex-shrink-0" size={30} />
                 <div>
                   <p className="font-bold text-navy text-lg">A+ BBB Rating</p>
-                  <p className="text-ink-lt text-sm">For Over 20 Years</p>
+                  <p className="text-[#888888] text-sm">For Over 20 Years</p>
                 </div>
               </div>
-              <a href="tel:9492506700" className="text-teal-lt font-bold text-lg hover:underline">
+              <a href="tel:9492506700" className="text-[#C9922A] font-bold text-lg hover:underline">
                 Call 949-250-6700
               </a>
             </div>
@@ -81,9 +81,9 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {valueProps.map((prop, i) => (
               <FadeUp key={i} delay={i * 0.15}>
-                <div className="bg-white rounded-xl p-8 shadow-sm border-2 border-warm-line hover:border-teal hover:-translate-y-1 transition-all duration-300">
-                  <div className="w-14 h-14 rounded-lg bg-teal-pale flex items-center justify-center mb-5">
-                    <prop.icon className="text-teal" size={28} />
+                <div className="bg-white rounded-xl p-8 shadow-sm border border-[#E8E2D9] hover:border-[#C9922A] hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-14 h-14 rounded-lg bg-[#FDF6E9] flex items-center justify-center mb-5">
+                    <prop.icon className="text-[#C9922A]" size={28} />
                   </div>
                   <h3 className="text-xl font-bold text-navy mb-3">{prop.title}</h3>
                   <p className="text-ink-mid leading-relaxed">{prop.text}</p>
@@ -100,9 +100,9 @@ export default function AboutPage() {
             {pullQuotes.map((q, i) => (
               <FadeUp key={i} delay={i * 0.15}>
                 <div className="text-center px-4">
-                  <div className="text-teal-lt text-7xl leading-none mb-3" style={{ fontFamily: "var(--font-cormorant)" }}>&ldquo;</div>
+                  <div className="text-[#E5B04A] text-7xl leading-none mb-3" style={{ fontFamily: "var(--font-cormorant)" }}>&ldquo;</div>
                   <p className="text-white/85 text-lg italic leading-relaxed mb-4">{q.text}</p>
-                  <p className="text-teal-lt font-semibold">— {q.name}</p>
+                  <p className="text-[#E5B04A] font-semibold">— {q.name}</p>
                 </div>
               </FadeUp>
             ))}
@@ -110,14 +110,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-teal py-16 px-4 text-center">
+      <section className="bg-[#FDF6E9] py-16 px-4 text-center border-t border-[#E8E2D9]">
         <FadeUp>
-          <h2 className="text-4xl font-bold text-white mb-6">Ready to Get Started?</h2>
+          <h2 className="text-4xl font-bold text-navy mb-6">Ready to Get Started?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/free-quote" className="px-8 py-4 rounded bg-green-cta text-white font-bold text-lg hover:bg-[#43a047] transition-all hover:-translate-y-0.5 shadow-lg">
+            <Link href="/free-quote" className="px-8 py-4 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-lg">
               Get Free Quote
             </Link>
-            <a href="tel:9492506700" className="px-8 py-4 rounded bg-white text-teal font-bold text-lg hover:bg-cream transition-all hover:-translate-y-0.5 shadow-lg">
+            <a href="tel:9492506700" className="px-8 py-4 rounded bg-navy text-white font-bold text-lg hover:bg-[#243860] transition-all hover:-translate-y-0.5 shadow-lg">
               Call 949-250-6700
             </a>
           </div>

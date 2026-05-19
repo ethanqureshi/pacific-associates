@@ -43,11 +43,11 @@ export default function HowItWorksPage() {
             {steps.map((step, i) => (
               <FadeUp key={i} delay={i * 0.1}>
                 <div className="flex gap-6 items-start">
-                  <div className="flex-shrink-0 w-16 h-16 rounded-full bg-teal flex items-center justify-center shadow-lg">
+                  <div className="flex-shrink-0 w-16 h-16 rounded-full bg-[#C9922A] flex items-center justify-center shadow-lg">
                     <step.icon className="text-white" size={28} />
                   </div>
                   <div className="flex-1 pt-2">
-                    <p className="text-teal-lt text-xs font-bold uppercase tracking-widest mb-1">Step {i + 1}</p>
+                    <p className="text-[#C9922A] text-xs font-bold uppercase tracking-widest mb-1">Step {i + 1}</p>
                     <h3 className="text-2xl font-bold text-navy mb-2">{step.title}</h3>
                     <p className="text-ink-mid leading-relaxed text-lg">{step.description}</p>
                   </div>
@@ -88,14 +88,14 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <section className="bg-teal py-16 px-4 text-center">
+      <section className="bg-[#FDF6E9] py-16 px-4 text-center border-t border-[#E8E2D9]">
         <FadeUp>
-          <h2 className="text-4xl font-bold text-white mb-6">Ready to Start Your Journey?</h2>
+          <h2 className="text-4xl font-bold text-navy mb-6">Ready to Start Your Journey?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/free-quote" className="px-8 py-4 rounded bg-green-cta text-white font-bold text-lg hover:bg-[#43a047] transition-all hover:-translate-y-0.5 shadow-lg">
+            <Link href="/free-quote" className="px-8 py-4 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-lg">
               Get Free Quote
             </Link>
-            <a href="tel:8662957500" className="px-8 py-4 rounded bg-white text-teal font-bold text-lg hover:bg-cream transition-all hover:-translate-y-0.5 shadow-lg">
+            <a href="tel:8662957500" className="px-8 py-4 rounded bg-navy text-white font-bold text-lg hover:bg-[#243860] transition-all hover:-translate-y-0.5 shadow-lg">
               Call 866-295-7500
             </a>
           </div>

@@ -43,13 +43,13 @@ export default function VideosPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/free-quote"
-                className="px-8 py-4 rounded bg-green-cta text-white font-bold text-lg hover:bg-[#43a047] transition-all hover:-translate-y-0.5 shadow-lg"
+                className="px-8 py-4 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-lg"
               >
                 Get a Free Quote
               </Link>
               <a
                 href="tel:8662957500"
-                className="px-8 py-4 rounded bg-navy text-white font-bold text-lg hover:bg-teal transition-all hover:-translate-y-0.5 shadow-lg inline-flex items-center gap-2 justify-center"
+                className="px-8 py-4 rounded bg-navy text-white font-bold text-lg hover:bg-[#243860] transition-all hover:-translate-y-0.5 shadow-lg inline-flex items-center gap-2 justify-center"
               >
                 <Phone size={20} />
                 Call 866-295-7500

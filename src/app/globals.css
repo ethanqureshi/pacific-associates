@@ -1,33 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #0a1628;
-  --color-teal: #1a6b6b;
-  --color-teal-lt: #1e8a8a;
-  --color-teal-pale: #e6f4f4;
-  --color-green-cta: #4caf50;
-  --color-cream: #f8f8f8;
-  --color-warm-line: #e0e0e0;
-  --color-ink: #1a1a1a;
-  --color-ink-mid: #444444;
-  --color-ink-lt: #777777;
+  --color-navy: #1B2B4B;
+  --color-navy-light: #243860;
+  --color-gold: #C9922A;
+  --color-gold-light: #E5B04A;
+  --color-gold-pale: #FDF6E9;
+  --color-warm-white: #FAFAF8;
+  --color-stone: #F3F0EB;
+  --color-ink: #1A1A1A;
+  --color-ink-mid: #4A4A4A;
+  --color-ink-light: #888888;
+  --color-success: #2D7A4F;
+  --color-success-bg: #EEF7F2;
+  /* Legacy aliases — keeps existing Tailwind classes working */
+  --color-teal: #C9922A;
+  --color-teal-lt: #E5B04A;
+  --color-teal-pale: #FDF6E9;
+  --color-green-cta: #C9922A;
+  --color-cream: #F3F0EB;
+  --color-warm-line: #E8E2D9;
+  --color-ink-lt: #888888;
   --font-display: var(--font-cormorant);
   --font-sans: var(--font-dm-sans);
 }
 
 :root {
-  --navy: #0a1628;
-  --teal: #1a6b6b;
-  --teal-lt: #1e8a8a;
-  --teal-pale: #e6f4f4;
-  --green-cta: #4caf50;
-  --green-cta-hover: #43a047;
-  --cream: #f8f8f8;
-  --warm-line: #e0e0e0;
-  --ink: #1a1a1a;
-  --ink-mid: #444444;
-  --ink-lt: #777777;
-  --white: #ffffff;
+  --navy: #1B2B4B;
+  --gold: #C9922A;
+  --gold-light: #E5B04A;
+  --gold-pale: #FDF6E9;
+  --stone: #F3F0EB;
+  --border: #E8E2D9;
+  --ink: #1A1A1A;
+  --ink-mid: #4A4A4A;
+  --ink-light: #888888;
+  --white: #FFFFFF;
 }
 
 html {

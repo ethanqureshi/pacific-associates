@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function FreeQuotePage() {
   return (
-    <section className="bg-cream min-h-screen py-16 px-4">
+    <section className="bg-[#F3F0EB] min-h-screen py-16 px-4">
       <div className="max-w-6xl mx-auto">
         <FadeUp className="text-center mb-12">
           <h1 className="text-5xl font-bold text-navy mb-4">Let’s get your free quote</h1>
@@ -23,7 +23,7 @@ export default function FreeQuotePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
             <FadeUp>
-              <div className="bg-white rounded-xl shadow-sm border border-warm-line p-8">
+              <div className="bg-white rounded-xl shadow-sm border border-[#E8E2D9] p-8">
                 <QuoteForm />
               </div>
             </FadeUp>
@@ -33,7 +33,7 @@ export default function FreeQuotePage() {
             <FadeUp delay={0.2}>
               <div className="bg-navy rounded-xl p-8 text-white sticky top-28 space-y-6">
                 <div className="flex items-center gap-3">
-                  <Award className="text-teal-lt flex-shrink-0" size={32} />
+                  <Award className="text-[#E5B04A] flex-shrink-0" size={32} />
                   <div>
                     <p className="text-2xl font-bold">A+ Rating</p>
                     <p className="text-white/55 text-sm">BBB Accredited Business</p>
@@ -49,14 +49,14 @@ export default function FreeQuotePage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Clock className="text-teal-lt flex-shrink-0" size={28} />
+                  <Clock className="text-[#E5B04A] flex-shrink-0" size={28} />
                   <div>
                     <p className="font-bold">25+ Years</p>
                     <p className="text-white/55 text-sm">In Business</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <ShieldCheck className="text-teal-lt flex-shrink-0" size={28} />
+                  <ShieldCheck className="text-[#E5B04A] flex-shrink-0" size={28} />
                   <div>
                     <p className="font-bold">Zero Complaints</p>
                     <p className="text-white/55 text-sm">Customer Satisfaction</p>
@@ -64,12 +64,12 @@ export default function FreeQuotePage() {
                 </div>
                 <div className="border-t border-white/10 pt-6">
                   <p className="text-white/55 text-sm mb-2">Talk to an expert now</p>
-                  <a href="tel:8662957500" className="text-2xl font-bold text-teal-lt hover:underline block mb-4">
+                  <a href="tel:8662957500" className="text-2xl font-bold text-[#E5B04A] hover:underline block mb-4">
                     866-295-7500
                   </a>
                   <a
                     href="tel:8662957500"
-                    className="w-full block text-center py-3 rounded bg-green-cta text-white font-bold hover:bg-[#43a047] transition-all"
+                    className="w-full block text-center py-3 rounded bg-[#C9922A] text-white font-bold hover:bg-[#A87820] transition-all"
                   >
                     Call Me Now
                   </a>
