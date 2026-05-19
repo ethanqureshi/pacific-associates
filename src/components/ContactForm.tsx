@@ -2,8 +2,40 @@
 import { useState } from "react";
 import { CheckCircle } from "lucide-react";
 
+// TODO (Shain): Replace with your Formspree form ID.
+// Steps: go to https://formspree.io, create a free account,
+// create a new form, copy the ID from the endpoint URL, and paste it below.
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID";
+
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    const data = new FormData(e.currentTarget);
+    const payload: Record<string, string> = {};
+    data.forEach((v, k) => { payload[k] = v as string; });
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError("Something went wrong. Please call us at 949-250-6700.");
+      }
+    } catch {
+      setError("Unable to submit. Please call us at 949-250-6700.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (submitted) {
     return (
@@ -16,25 +48,30 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Name *</label>
-        <input type="text" required placeholder="Your full name" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="name" type="text" required placeholder="Your full name" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Email *</label>
-        <input type="email" required placeholder="you@example.com" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="email" type="email" required placeholder="you@example.com" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Phone</label>
-        <input type="tel" placeholder="(555) 000-0000" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="phone" type="tel" placeholder="(555) 000-0000" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Message *</label>
-        <textarea required rows={4} placeholder="How can we help you?" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors resize-none" />
+        <textarea name="message" required rows={4} placeholder="How can we help you?" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors resize-none" />
       </div>
-      <button type="submit" className="w-full py-3 rounded bg-teal text-white font-bold hover:bg-teal-lt transition-all hover:-translate-y-0.5 shadow">
-        Send Message
+      {error && <p className="text-red-600 text-sm">{error}</p>}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full py-3 rounded bg-teal text-white font-bold hover:bg-teal-lt transition-all hover:-translate-y-0.5 shadow disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {loading ? "Sending..." : "Send Message"}
       </button>
     </form>
   );

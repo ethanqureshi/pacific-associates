@@ -2,6 +2,11 @@
 import { useState } from "react";
 import { PlusCircle, CheckCircle } from "lucide-react";
 
+// TODO (Shain): Replace with your Formspree form ID.
+// Steps: go to https://formspree.io, create a free account,
+// create a new form, copy the ID from the endpoint URL, and paste it below.
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID";
+
 interface Creditor {
   name: string;
   balance: string;
@@ -9,6 +14,8 @@ interface Creditor {
 
 export default function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [creditors, setCreditors] = useState<Creditor[]>([{ name: "", balance: "" }]);
 
   const addCreditor = () => {
@@ -19,6 +26,32 @@ export default function QuoteForm() {
     const updated = [...creditors];
     updated[i][field] = value;
     setCreditors(updated);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    const data = new FormData(e.currentTarget);
+    const payload: Record<string, unknown> = {};
+    data.forEach((v, k) => { payload[k] = v; });
+    payload.creditors = creditors.filter((c) => c.name || c.balance);
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError("Something went wrong. Please call us at 866-295-7500.");
+      }
+    } catch {
+      setError("Unable to submit. Please call us at 866-295-7500.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -33,38 +66,36 @@ export default function QuoteForm() {
         </p>
         <p className="text-ink font-semibold">
           Call now to receive $100 off your first payment:{" "}
-          <a href="tel:8662957500" className="text-teal-lt hover:underline">
-            866-295-7500
-          </a>
+          <a href="tel:8662957500" className="text-teal-lt hover:underline">866-295-7500</a>
         </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-ink mb-1">First Name *</label>
-          <input type="text" required placeholder="John" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="firstName" type="text" required placeholder="John" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
         </div>
         <div>
           <label className="block text-sm font-medium text-ink mb-1">Last Name *</label>
-          <input type="text" required placeholder="Smith" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="lastName" type="text" required placeholder="Smith" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
         </div>
       </div>
       <div>
         <label className="block text-sm font-medium text-ink mb-1">Email Address *</label>
-        <input type="email" required placeholder="john@example.com" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+        <input name="email" type="email" required placeholder="john@example.com" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-ink mb-1">Phone Number *</label>
-          <input type="tel" required placeholder="(555) 000-0000" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="phone" type="tel" required placeholder="(555) 000-0000" className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
         </div>
         <div>
           <label className="block text-sm font-medium text-ink mb-1">Zip Code *</label>
-          <input type="text" required placeholder="92612" maxLength={5} className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
+          <input name="zip" type="text" required placeholder="92612" maxLength={5} className="w-full border border-warm-line rounded px-4 py-3 text-ink focus:outline-none focus:border-teal transition-colors" />
         </div>
       </div>
 
@@ -91,13 +122,8 @@ export default function QuoteForm() {
           ))}
         </div>
         {creditors.length < 4 && (
-          <button
-            type="button"
-            onClick={addCreditor}
-            className="mt-3 flex items-center gap-2 text-teal text-sm font-medium hover:text-teal-lt transition-colors"
-          >
-            <PlusCircle size={18} />
-            Add Another Creditor
+          <button type="button" onClick={addCreditor} className="mt-3 flex items-center gap-2 text-teal text-sm font-medium hover:text-teal-lt transition-colors">
+            <PlusCircle size={18} /> Add Another Creditor
           </button>
         )}
       </div>
@@ -106,11 +132,14 @@ export default function QuoteForm() {
         By providing my contact information and clicking on the button above, I acknowledge, agree, and provide express written consent to share my information with Pacific Associates, in order to deliver calls or text messages to me.
       </p>
 
+      {error && <p className="text-red-600 text-sm">{error}</p>}
+
       <button
         type="submit"
-        className="w-full py-4 rounded bg-green-cta text-white font-bold text-lg hover:bg-[#43a047] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+        disabled={loading}
+        className="w-full py-4 rounded bg-green-cta text-white font-bold text-lg hover:bg-[#43a047] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        Get My Quote
+        {loading ? "Submitting..." : "Get My Quote"}
       </button>
     </form>
   );

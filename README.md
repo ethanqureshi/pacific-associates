@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pacific Associates — Website
+
+Production Next.js 16 website for Pacific Associates, a debt consolidation company in Irvine, CA.
+
+## Stack
+
+- **Framework**: Next.js 16 (App Router, TypeScript)
+- **Styles**: Tailwind CSS 4
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Fonts**: Cormorant Garamond + DM Sans (Google Fonts via next/font)
+- **Deployment**: Vercel
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | Description |
+|-------|-------------|
+| `/` | Homepage — hero, stats, video, testimonials |
+| `/about` | About the company |
+| `/how-it-works` | 5-step process + FAQ |
+| `/free-quote` | Quote form |
+| `/contact` | Contact form + address |
+| `/videos` | YouTube embed |
+| `/privacy` | Privacy policy |
 
-## Learn More
+## Forms — Formspree Setup (Action Required)
 
-To learn more about Next.js, take a look at the following resources:
+Both the quote form and contact form POST to Formspree so submissions are emailed to you.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**To activate:**
+1. Go to [https://formspree.io](https://formspree.io) and create a free account
+2. Create a new form and set the notification email to your address
+3. Copy the form ID from your Formspree dashboard (looks like `xabcdefg`)
+4. Replace `REPLACE_WITH_YOUR_FORMSPREE_ID` in these three files:
+   - `src/components/QuoteForm.tsx`
+   - `src/components/ContactForm.tsx`
+   - `src/components/InlineQuoteForm.tsx`
+5. Redeploy with `vercel --prod`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Security Headers
 
-## Deploy on Vercel
+Configured in `next.config.ts`:
+- `X-Frame-Options: DENY`
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## ⚠️ Rate Limiting — Required Before High-Traffic Launch
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The quote and contact forms currently submit directly to Formspree, which has its own basic spam protection. However, **before this site receives significant real traffic**, add server-side rate limiting to prevent abuse:
+
+**Recommended approach:**
+- Add an `/api/submit` Next.js route handler that proxies form submissions to Formspree
+- Apply rate limiting per IP using [`@upstash/ratelimit`](https://github.com/upstash/ratelimit) with a free Upstash Redis account
+- Example: 5 submissions per IP per hour
+- This prevents spam floods, API bill attacks from bots, and credential stuffing
+
+```ts
+// Example rate limit config (add to /src/app/api/submit/route.ts)
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, "1 h"),
+});
+```
+
+## Deployment
+
+```bash
+# Preview deploy
+vercel
+
+# Production deploy
+vercel --prod
+```
+
+Future pushes to `master` on GitHub auto-deploy via Vercel’s Git integration.

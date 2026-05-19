@@ -7,6 +7,7 @@ const navLinks = [
   { href: "/free-quote", label: "Free Quote" },
   { href: "/videos", label: "Videos" },
   { href: "/contact", label: "Contact Us" },
+  { href: "/privacy", label: "Privacy Policy" },
 ];
 
 export default function Footer() {

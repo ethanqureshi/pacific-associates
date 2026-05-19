@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_woz_code__Search",
+      "mcp__plugin_woz_code__Edit",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(gh repo *)",
+      "Bash(npm install *)",
+      "Bash(vercel whoami *)",
+      "Bash(vercel --yes --name pacific-associates)",
+      "Bash(git push *)"
+    ]
+  }
+}
