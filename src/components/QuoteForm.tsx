@@ -16,7 +16,10 @@ export default function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [creditors, setCreditors] = useState<Creditor[]>([{ name: "", balance: "" }]);
+  const [creditors, setCreditors] = useState<Creditor[]>([
+    { name: "", balance: "" },
+    { name: "", balance: "" },
+  ]);
 
   const addCreditor = () => {
     if (creditors.length < 4) setCreditors([...creditors, { name: "", balance: "" }]);
@@ -73,7 +76,7 @@ export default function QuoteForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-ink mb-1">First Name *</label>
@@ -99,9 +102,9 @@ export default function QuoteForm() {
         </div>
       </div>
 
-      <div className="border-t border-warm-line pt-5">
-        <h4 className="font-semibold text-ink mb-4">List all your creditors with the approximate balance</h4>
-        <div className="space-y-3">
+      <div className="border-t border-warm-line pt-4">
+        <h4 className="font-semibold text-ink mb-3">List all your creditors with the approximate balance</h4>
+        <div className="space-y-2">
           {creditors.map((creditor, i) => (
             <div key={i} className="grid grid-cols-2 gap-3">
               <input
@@ -137,7 +140,7 @@ export default function QuoteForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-4 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full py-3.5 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? "Submitting..." : "Get My Free Quote"}
       </button>

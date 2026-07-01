@@ -1,5 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
+import { Award, Star, Clock, ShieldCheck } from "lucide-react";
+
+const BBB_URL =
+  "https://www.bbb.org/us/ca/irvine/profile/debt-relief-services/pacific-associates-1126-13132048";
 
 const item = {
   hidden: { opacity: 0, y: 30 },
@@ -13,8 +17,8 @@ const item = {
 export default function HeroContent() {
   return (
     <section className="relative overflow-hidden bg-white min-h-[75vh] flex items-center">
-      <div className="relative w-full max-w-4xl mx-auto px-6 py-20">
-        {/* Headline + subtext */}
+      <div className="relative w-full max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Left: headline + subtext */}
         <div>
           <motion.div custom={0} initial="hidden" animate="visible" variants={item}>
             <span className="inline-block text-[#C9922A] text-xs font-semibold uppercase tracking-widest mb-6">
@@ -54,6 +58,55 @@ export default function HeroContent() {
             </a>
           </motion.div>
         </div>
+
+        {/* Right: trust info */}
+        <motion.div
+          custom={2}
+          initial="hidden"
+          animate="visible"
+          variants={item}
+          className="bg-navy rounded-2xl p-8 text-white shadow-lg space-y-6"
+        >
+          <div className="flex items-center gap-3">
+            <Clock className="text-[#E5B04A] flex-shrink-0" size={30} />
+            <div>
+              <p className="text-2xl font-bold">27 Years in Business</p>
+              <p className="text-white/55 text-sm">Trusted since 1998</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Award className="text-[#E5B04A] flex-shrink-0" size={30} />
+            <div>
+              <p className="text-2xl font-bold">A+ BBB Rating</p>
+              <a
+                href={BBB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#E5B04A] text-sm hover:underline"
+              >
+                Read our BBB reviews →
+              </a>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex gap-0.5 flex-shrink-0">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="fill-[#E5B04A] text-[#E5B04A]" size={18} />
+              ))}
+            </div>
+            <div>
+              <p className="text-2xl font-bold">4.99 / 5 Stars</p>
+              <p className="text-white/55 text-sm">Average review rating</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="text-[#E5B04A] flex-shrink-0" size={30} />
+            <div>
+              <p className="text-2xl font-bold">Zero Complaints</p>
+              <p className="text-white/55 text-sm">Customer satisfaction</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

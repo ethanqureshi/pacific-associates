@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 
 export default function FreeQuotePage() {
   return (
-    <section className="bg-[#F3F0EB] min-h-screen py-16 px-4">
+    <section className="bg-[#F3F0EB] min-h-screen py-10 px-4">
       <div className="max-w-6xl mx-auto">
-        <FadeUp className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-navy mb-4">Let’s get your free quote</h1>
-          <p className="text-ink-mid text-xl max-w-2xl mx-auto">
+        <FadeUp className="text-center mb-6">
+          <h1 className="text-4xl font-bold text-navy mb-3">Let’s get your free quote</h1>
+          <p className="text-ink-mid text-lg max-w-2xl mx-auto">
             Fill out the form below and receive your personalized quote within 24 hours. No obligation, no cost, no pressure.
           </p>
         </FadeUp>
@@ -23,7 +23,7 @@ export default function FreeQuotePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
             <FadeUp>
-              <div className="bg-white rounded-xl shadow-sm border border-[#E8E2D9] p-8">
+              <div className="bg-white rounded-xl shadow-sm border border-[#E8E2D9] p-6">
                 <QuoteForm />
               </div>
             </FadeUp>
