@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -18,18 +19,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
           <div>
             <div className="mb-4">
-              <span
-                className="block font-bold tracking-[0.18em] text-xl text-white"
-                style={{ fontFamily: "var(--font-cormorant)" }}
-              >
-                PACIFIC
-              </span>
-              <span
-                className="block font-bold tracking-[0.18em] text-xl text-[#E5B04A]"
-                style={{ fontFamily: "var(--font-cormorant)" }}
-              >
-                ASSOCIATES
-              </span>
+              <Logo variant="light" />
             </div>
             <p className="text-white/50 text-sm leading-relaxed">
               One of the nation&apos;s highest rated debt consolidation companies for over two decades.

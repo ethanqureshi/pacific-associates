@@ -23,8 +23,8 @@ export default function HeroContent() {
         {/* Left: headline + subtext */}
         <div>
           <motion.div custom={0} initial="hidden" animate="visible" variants={item}>
-            <span className="inline-block text-[#C9922A] text-xs font-semibold uppercase tracking-widest mb-6">
-              A+ BBB Rated &middot; 27 Years in Business
+            <span className="inline-block text-[#C9922A] text-sm font-bold uppercase tracking-widest mb-6">
+              See why we&rsquo;re different!
             </span>
           </motion.div>
 

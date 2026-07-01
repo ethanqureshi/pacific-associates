@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { href: "/", label: "HOME" },
@@ -41,19 +42,8 @@ export default function Navbar() {
       {/* Main nav */}
       <div className={`bg-white transition-all duration-300 ${scrolled ? "shadow-lg" : "shadow-sm border-b border-[#E8E2D9]"}`}>
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex flex-col leading-none select-none">
-            <span
-              className="font-bold tracking-[0.18em] text-xl text-navy"
-              style={{ fontFamily: "var(--font-cormorant)" }}
-            >
-              PACIFIC
-            </span>
-            <span
-              className="font-bold tracking-[0.18em] text-xl text-[#C9922A]"
-              style={{ fontFamily: "var(--font-cormorant)" }}
-            >
-              ASSOCIATES
-            </span>
+          <Link href="/" aria-label="Pacific Associates home">
+            <Logo />
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
