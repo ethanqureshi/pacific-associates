@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Award, Star, Clock, ShieldCheck } from "lucide-react";
 import TrackedCall from "@/components/TrackedCall";
 
@@ -53,7 +54,16 @@ export default function HeroContent() {
             We&apos;ve been one of the nation&apos;s highest rated debt consolidation companies for over two decades.
           </motion.p>
 
-          <motion.div custom={3} initial="hidden" animate="visible" variants={item}>
+          <motion.div custom={3} initial="hidden" animate="visible" variants={item} className="mb-6">
+            <Link
+              href="/free-quote"
+              className="inline-block px-8 py-4 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-lg"
+            >
+              Get a Free Quote
+            </Link>
+          </motion.div>
+
+          <motion.div custom={4} initial="hidden" animate="visible" variants={item}>
             <TrackedCall location="hero" className="text-[#C9922A] font-semibold hover:underline text-base">
               Questions? Call 866-295-7500
             </TrackedCall>
