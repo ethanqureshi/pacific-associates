@@ -6,6 +6,7 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 import TestimonialCard from "@/components/TestimonialCard";
 import HeroContent from "@/components/HeroContent";
 import DebtCalculator from "@/components/DebtCalculator";
+import TrackedCall from "@/components/TrackedCall";
 
 export const metadata: Metadata = {
   title: "Pacific Associates | Debt Consolidation Irvine CA",
@@ -162,12 +163,12 @@ export default function HomePage() {
               >
                 Get Free Quote
               </Link>
-              <a
-                href="tel:8662957500"
+              <TrackedCall
+                location="home_cta_banner"
                 className="w-full sm:w-auto px-8 py-4 rounded bg-navy text-white font-bold text-lg hover:bg-[#243860] transition-all hover:-translate-y-0.5 shadow-lg text-center"
               >
                 Call 866-295-7500
-              </a>
+              </TrackedCall>
             </div>
           </FadeUp>
         </div>

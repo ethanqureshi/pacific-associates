@@ -16,6 +16,7 @@ export default function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [consent, setConsent] = useState(false);
   const [creditors, setCreditors] = useState<Creditor[]>([
     { name: "", balance: "" },
     { name: "", balance: "" },
@@ -131,15 +132,24 @@ export default function QuoteForm() {
         )}
       </div>
 
-      <p className="text-ink-lt text-xs leading-relaxed">
-        By submitting this form I consent to Pacific Associates contacting me via phone or text.
-      </p>
+      <label className="flex items-start gap-3 text-ink-lt text-xs leading-relaxed cursor-pointer">
+        <input
+          type="checkbox"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#C9922A] cursor-pointer"
+        />
+        <span>
+          By checking this box I provide express written consent for Pacific Associates to contact me via phone or text regarding my debt relief options.
+        </span>
+      </label>
 
       {error && <p className="text-red-600 text-sm">{error}</p>}
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || !consent}
         className="w-full py-3.5 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? "Submitting..." : "Get My Free Quote"}

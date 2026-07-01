@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Award, Star, Clock, ShieldCheck } from "lucide-react";
+import TrackedCall from "@/components/TrackedCall";
 
 const BBB_URL =
   "https://www.bbb.org/us/ca/irvine/profile/debt-relief-services/pacific-associates-1126-13132048";
@@ -53,9 +54,9 @@ export default function HeroContent() {
           </motion.p>
 
           <motion.div custom={3} initial="hidden" animate="visible" variants={item}>
-            <a href="tel:8662957500" className="text-[#C9922A] font-semibold hover:underline text-base">
+            <TrackedCall location="hero" className="text-[#C9922A] font-semibold hover:underline text-base">
               Questions? Call 866-295-7500
-            </a>
+            </TrackedCall>
           </motion.div>
         </div>
 

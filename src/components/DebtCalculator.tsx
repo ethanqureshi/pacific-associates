@@ -178,6 +178,11 @@ export default function DebtCalculator() {
           </div>
         </div>
 
+        {/* Compliance disclaimer */}
+        <p className="order-last mt-4 text-center text-[11px] leading-relaxed text-[#888888] max-w-2xl mx-auto">
+          Results are estimates only and not a guarantee. Individual results vary. Pacific Associates does not assume debt, make payments to creditors, or provide legal or tax advice.
+        </p>
+
         <div className="text-center">
           <Link
             href="/free-quote"

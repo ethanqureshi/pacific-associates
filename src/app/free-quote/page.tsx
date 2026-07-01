@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Award, Star, Clock, ShieldCheck } from "lucide-react";
 import FadeUp from "@/components/FadeUp";
 import QuoteForm from "@/components/QuoteForm";
+import TrackedCall from "@/components/TrackedCall";
 
 export const metadata: Metadata = {
   title: "Get a Free Quote",
@@ -64,15 +65,15 @@ export default function FreeQuotePage() {
                 </div>
                 <div className="border-t border-white/10 pt-6">
                   <p className="text-white/55 text-sm mb-2">Talk to an expert now</p>
-                  <a href="tel:8662957500" className="text-2xl font-bold text-[#E5B04A] hover:underline block mb-4">
+                  <TrackedCall location="quote_sidebar_number" className="text-2xl font-bold text-[#E5B04A] hover:underline block mb-4">
                     866-295-7500
-                  </a>
-                  <a
-                    href="tel:8662957500"
+                  </TrackedCall>
+                  <TrackedCall
+                    location="quote_sidebar_button"
                     className="w-full block text-center py-3 rounded bg-[#C9922A] text-white font-bold hover:bg-[#A87820] transition-all"
                   >
                     Call Me Now
-                  </a>
+                  </TrackedCall>
                 </div>
               </div>
             </FadeUp>
