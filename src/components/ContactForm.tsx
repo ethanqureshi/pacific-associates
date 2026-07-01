@@ -2,10 +2,7 @@
 import { useState } from "react";
 import { CheckCircle } from "lucide-react";
 
-// TODO (Shain): Replace with your Formspree form ID.
-// Steps: go to https://formspree.io, create a free account,
-// create a new form, copy the ID from the endpoint URL, and paste it below.
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mojokkrd";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
