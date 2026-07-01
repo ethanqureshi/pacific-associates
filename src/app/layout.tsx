@@ -71,7 +71,7 @@ export default function RootLayout({
       "@type": "AggregateRating",
       ratingValue: "4.99",
       bestRating: "5",
-      ratingCount: "150",
+      ratingCount: "250",
     },
   };
 

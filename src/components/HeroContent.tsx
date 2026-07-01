@@ -107,7 +107,7 @@ export default function HeroContent() {
             </div>
             <div>
               <p className="text-2xl font-bold">4.99 / 5 Stars</p>
-              <p className="text-white/55 text-sm">Average from 150+ reviews</p>
+              <p className="text-white/55 text-sm">Average from 250+ reviews</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
