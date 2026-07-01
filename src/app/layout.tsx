@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   },
   description:
     "Pacific Associates is one of the nation's highest rated debt consolidation companies, helping clients get out of debt in 24–48 months with payments lower than current minimums.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

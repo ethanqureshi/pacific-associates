@@ -100,7 +100,7 @@ export default function QuoteForm() {
       </div>
 
       <div className="border-t border-warm-line pt-5">
-        <h4 className="font-semibold text-ink mb-4">Your Creditors</h4>
+        <h4 className="font-semibold text-ink mb-4">List all your creditors with the approximate balance</h4>
         <div className="space-y-3">
           {creditors.map((creditor, i) => (
             <div key={i} className="grid grid-cols-2 gap-3">
@@ -123,13 +123,13 @@ export default function QuoteForm() {
         </div>
         {creditors.length < 4 && (
           <button type="button" onClick={addCreditor} className="mt-3 flex items-center gap-2 text-[#C9922A] text-sm font-medium hover:text-[#A87820] transition-colors">
-            <PlusCircle size={18} /> Add Another Creditor
+            <PlusCircle size={18} /> Add Creditor
           </button>
         )}
       </div>
 
       <p className="text-ink-lt text-xs leading-relaxed">
-        By providing my contact information and clicking on the button above, I acknowledge, agree, and provide express written consent to share my information with Pacific Associates, in order to deliver calls or text messages to me.
+        By submitting this form I consent to Pacific Associates contacting me via phone or text.
       </p>
 
       {error && <p className="text-red-600 text-sm">{error}</p>}
@@ -139,7 +139,7 @@ export default function QuoteForm() {
         disabled={loading}
         className="w-full py-4 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {loading ? "Submitting..." : "Get My Quote"}
+        {loading ? "Submitting..." : "Get My Free Quote"}
       </button>
     </form>
   );
