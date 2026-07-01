@@ -55,6 +55,7 @@ function leadEmail() {
                   <strong style="color:#C9922A;">Shain Mercer</strong><br/>
                   Enrollment Advisor, Pacific Associates<br/>
                   Phone: <a href="tel:8662957500" style="color:#D7DCE5;text-decoration:none;">866-295-7500</a><br/>
+                  Direct: <a href="tel:9492501851" style="color:#D7DCE5;text-decoration:none;">(949) 250-1851</a><br/>
                   Email: <a href="mailto:shainm@pacificassociates.com" style="color:#D7DCE5;text-decoration:none;">shainm@pacificassociates.com</a>
                 </p>
               </td>
