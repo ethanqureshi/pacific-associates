@@ -79,7 +79,7 @@ export default function DebtCalculator() {
         </div>
 
         {/* Sliders */}
-        <div className="bg-[#FAFAF8] rounded-2xl border border-[#E8E2D9] p-8 mb-6">
+        <div className="bg-[#FAFAF8] rounded-2xl border border-[#E8E2D9] p-5 sm:p-8 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <div className="flex justify-between items-center mb-4">

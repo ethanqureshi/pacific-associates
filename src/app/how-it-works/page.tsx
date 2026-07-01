@@ -28,9 +28,9 @@ const faqs = [
 export default function HowItWorksPage() {
   return (
     <>
-      <section className="bg-navy py-20 px-4 text-center">
+      <section className="bg-navy py-14 sm:py-20 px-4 text-center">
         <FadeUp>
-          <h1 className="text-5xl lg:text-6xl font-bold text-white mb-4">How It Works</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">How It Works</h1>
           <p className="text-white/70 text-xl max-w-2xl mx-auto">
             Our simple 5-step process gets you out of debt in 24–48 months.
           </p>

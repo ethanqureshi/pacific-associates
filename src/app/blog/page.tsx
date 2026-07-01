@@ -22,14 +22,14 @@ export default function BlogPage() {
 
   return (
     <>
-      <section className="bg-white py-20 px-4 border-b border-[#E8E2D9]">
+      <section className="bg-white py-14 sm:py-20 px-4 border-b border-[#E8E2D9]">
         <div className="max-w-3xl mx-auto">
           <FadeUp>
             <span className="inline-block text-[#C9922A] text-xs font-semibold uppercase tracking-widest mb-4">
               Pacific Associates
             </span>
             <h1
-              className="text-5xl font-bold text-navy mb-4"
+              className="text-4xl sm:text-5xl font-bold text-navy mb-4"
               style={{ fontFamily: 'var(--font-cormorant)' }}
             >
               Resources &amp; Insights

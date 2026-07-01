@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-navy py-20 px-4 text-center">
+      <section className="bg-navy py-14 sm:py-20 px-4 text-center">
         <FadeUp>
-          <h1 className="text-5xl lg:text-6xl font-bold text-white mb-4">Call or Visit Us</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">Call or Visit Us</h1>
           <p className="text-white/70 text-xl">Our team is ready to help you get started on the path to financial freedom.</p>
         </FadeUp>
       </section>

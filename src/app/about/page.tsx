@@ -35,10 +35,10 @@ const pullQuotes = [
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-navy py-24 px-4 text-center">
+      <section className="bg-navy py-16 sm:py-24 px-4 text-center">
         <div className="max-w-3xl mx-auto">
           <FadeUp>
-            <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
               Get Out of Debt Today
             </h1>
             <p className="text-xl text-white/75 leading-relaxed">

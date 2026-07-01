@@ -70,6 +70,15 @@ export default function Navbar() {
             ))}
           </nav>
 
+          <div className="hidden md:flex items-center">
+            <Link
+              href="/free-quote"
+              className="px-5 py-2.5 rounded bg-[#C9922A] text-white font-semibold text-sm tracking-wide hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow hover:shadow-md"
+            >
+              Free Quote
+            </Link>
+          </div>
+
           <button
             className="md:hidden p-2 text-navy"
             onClick={() => setOpen(!open)}
@@ -103,6 +112,13 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/free-quote"
+                onClick={() => setOpen(false)}
+                className="mt-3 px-6 py-3 rounded bg-[#C9922A] text-white font-semibold text-sm text-center hover:bg-[#A87820]"
+              >
+                Free Quote
+              </Link>
             </nav>
           </motion.div>
         )}

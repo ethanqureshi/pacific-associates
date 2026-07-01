@@ -26,9 +26,9 @@ const videos = [
 export default function VideosPage() {
   return (
     <>
-      <section className="bg-navy py-20 px-4 text-center">
+      <section className="bg-navy py-14 sm:py-20 px-4 text-center">
         <FadeUp>
-          <h1 className="text-5xl lg:text-6xl font-bold text-white mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
             Learn How Pacific Associates Works
           </h1>
           <p className="text-white/70 text-xl max-w-2xl mx-auto">

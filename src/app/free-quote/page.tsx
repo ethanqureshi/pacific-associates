@@ -21,7 +21,7 @@ export default function FreeQuotePage() {
           </p>
         </FadeUp>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           <div className="lg:col-span-2">
             <FadeUp>
               <div className="bg-white rounded-xl shadow-sm border border-[#E8E2D9] p-6">
