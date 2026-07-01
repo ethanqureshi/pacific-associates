@@ -15,8 +15,8 @@ export default function Logo({
   return (
     <span className={`flex items-center gap-3 select-none ${className}`}>
       <svg
-        width="44"
-        height="44"
+        width="52"
+        height="52"
         viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -62,13 +62,13 @@ export default function Logo({
       </svg>
       <span className="flex flex-col leading-none">
         <span
-          className="font-bold tracking-[0.2em] text-2xl"
+          className="font-bold tracking-[0.2em] text-2xl sm:text-3xl"
           style={{ fontFamily: "var(--font-cormorant)", color: pacific }}
         >
           PACIFIC
         </span>
         <span
-          className="font-bold tracking-[0.2em] text-2xl"
+          className="font-bold tracking-[0.2em] text-2xl sm:text-3xl"
           style={{ fontFamily: "var(--font-cormorant)", color: gold }}
         >
           ASSOCIATES
