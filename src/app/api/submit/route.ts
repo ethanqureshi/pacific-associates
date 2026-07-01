@@ -4,7 +4,9 @@ import { Resend } from "resend";
 export const runtime = "nodejs";
 
 const FROM = "Shain Mercer <shainm@pacificassoc.com>";
-const NOTIFY_TO = "shainm@pacificassoc.com";
+// Shain's monitored inbox (Microsoft 365 on pacificassociates.com).
+// The From address stays on the Resend-verified pacificassoc.com domain.
+const NOTIFY_TO = "shainm@pacificassociates.com";
 const PRIVACY_URL = "https://www.pacificassoc.com/privacy";
 
 interface Creditor {
