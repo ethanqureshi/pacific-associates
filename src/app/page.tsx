@@ -5,7 +5,6 @@ import FadeUp from "@/components/FadeUp";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import TestimonialCard from "@/components/TestimonialCard";
 import HeroContent from "@/components/HeroContent";
-import DebtCalculator from "@/components/DebtCalculator";
 import TrackedCall from "@/components/TrackedCall";
 
 export const metadata: Metadata = {
@@ -50,8 +49,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-
-      <DebtCalculator />
 
       {/* Stats — stone background */}
       <section className="bg-[#F3F0EB] py-14 px-4">
