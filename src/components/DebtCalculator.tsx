@@ -64,9 +64,9 @@ export default function DebtCalculator() {
     `linear-gradient(to right, #C9922A 0%, #C9922A ${pct}%, #E8E2D9 ${pct}%, #E8E2D9 100%)`;
 
   return (
-    <section className="bg-white py-16 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10">
+    <section className="bg-white py-12 px-4">
+      <div className="max-w-4xl mx-auto flex flex-col">
+        <div className="text-center mb-6">
           <h2
             className="text-4xl font-bold text-navy mb-3"
             style={{ fontFamily: "var(--font-cormorant)" }}
@@ -79,7 +79,7 @@ export default function DebtCalculator() {
         </div>
 
         {/* Sliders */}
-        <div className="bg-[#FAFAF8] rounded-2xl border border-[#E8E2D9] p-8 mb-8">
+        <div className="bg-[#FAFAF8] rounded-2xl border border-[#E8E2D9] p-8 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <div className="flex justify-between items-center mb-4">
@@ -130,8 +130,8 @@ export default function DebtCalculator() {
           </div>
         </div>
 
-        {/* Result cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        {/* Result cards — ordered last so the CTA stays high on the page */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 order-last mt-8">
           <div className="bg-white rounded-xl p-6 border border-[#E8E2D9] shadow-sm text-center">
             <p className="text-xs font-semibold uppercase tracking-wider text-[#4A4A4A] mb-2">
               Paying Only Minimums
