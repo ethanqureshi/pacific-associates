@@ -25,7 +25,7 @@ const toNumber = (v: unknown) =>
   parseFloat(String(v ?? "").replace(/[^0-9.]/g, "")) || 0;
 
 // Follow-up email sent TO the lead.
-function leadEmail(monthlyFmt: string) {
+function leadEmail() {
   return `<!DOCTYPE html>
 <html>
   <body style="margin:0;padding:0;background:#1B2B4B;">
@@ -40,7 +40,7 @@ function leadEmail(monthlyFmt: string) {
             </tr>
             <tr>
               <td style="padding:0 8px 20px;">
-                <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:28px;line-height:1.3;color:#E5B04A;font-weight:bold;">Reduce your debt for just $${monthlyFmt} per month.</h1>
+                <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:28px;line-height:1.3;color:#E5B04A;font-weight:bold;">Reduce your debt faster and for less money.</h1>
               </td>
             </tr>
             <tr>
@@ -157,8 +157,8 @@ export async function POST(req: Request) {
       from: FROM,
       to: email,
       replyTo: NOTIFY_TO,
-      subject: `Reduce your debt for just $${monthlyFmt} per month`,
-      html: leadEmail(monthlyFmt),
+      subject: "Reduce your debt faster with Pacific Associates",
+      html: leadEmail(),
     }),
     resend.emails.send({
       from: FROM,
