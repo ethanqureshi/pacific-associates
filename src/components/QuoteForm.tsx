@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { PlusCircle, CheckCircle } from "lucide-react";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mojokkrd";
+const SUBMIT_ENDPOINT = "/api/submit";
 
 interface Creditor {
   name: string;
@@ -38,7 +38,7 @@ export default function QuoteForm() {
     data.forEach((v, k) => { payload[k] = v; });
     payload.creditors = creditors.filter((c) => c.name || c.balance);
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(SUBMIT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
