@@ -5,8 +5,23 @@ import FadeUp from "@/components/FadeUp";
 
 export const metadata: Metadata = {
   title: "Videos",
-  description: "Watch videos to learn how Pacific Associates debt consolidation program works and how we can help you get out of debt in 24–48 months.",
+  description:
+    "Watch videos from Pacific Associates to learn how our debt consolidation program works and how we help clients get out of debt in 24–48 months.",
 };
+
+// Videos from the Pacific Associates YouTube channel
+// (https://www.youtube.com/@pacificassociates3045/videos).
+const videos = [
+  { id: "OwU-QsXMgaM", title: "Pacific Associates Intro" },
+  { id: "1wt_mX4IjdY", title: "Why Pacific Associates is Different" },
+  { id: "QnsbXE-x9R4", title: "How We Make Money at Pacific Associates" },
+  { id: "BPYN2wr4jow", title: "Credit Score - Pacific Associates" },
+  { id: "lCHbJW7bHqA", title: "Closing Cards - Pacific Associates" },
+  { id: "oTMgI_bAIUQ", title: "Hardship Program Overview" },
+  { id: "qi9Hq3uUnP8", title: "Happy Customers!" },
+  { id: "cqBwXE_91-s", title: "Brian Testimonial - Pacific Associates" },
+  { id: "JRblC23lHzI", title: "Barb Testimonial - Pacific Associates" },
+];
 
 export default function VideosPage() {
   return (
@@ -17,24 +32,34 @@ export default function VideosPage() {
             Learn How Pacific Associates Works
           </h1>
           <p className="text-white/70 text-xl max-w-2xl mx-auto">
-            Watch our video to understand how our debt consolidation program helps you achieve financial freedom.
+            Watch our videos to understand how our debt consolidation program helps you achieve financial freedom.
           </p>
         </FadeUp>
       </section>
 
       <section className="bg-white py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <FadeUp>
-            <div className="aspect-video rounded-xl overflow-hidden shadow-2xl mb-12">
-              <iframe
-                src="https://www.youtube.com/embed/OwU-QsXMgaM?rel=0"
-                title="How Pacific Associates Works"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
-          </FadeUp>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+            {videos.map((v, i) => (
+              <FadeUp key={v.id} delay={(i % 3) * 0.1}>
+                <div className="rounded-xl overflow-hidden shadow-lg border border-[#E8E2D9] bg-white h-full">
+                  <div className="aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${v.id}?rel=0`}
+                      title={v.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                      className="w-full h-full"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <p className="font-semibold text-navy text-sm leading-snug">{v.title}</p>
+                  </div>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
 
           <FadeUp delay={0.2} className="text-center">
             <p className="text-ink-mid text-lg leading-relaxed max-w-2xl mx-auto mb-8">

@@ -1,6 +1,14 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { PlusCircle, CheckCircle } from "lucide-react";
+
+const BBB_URL =
+  "https://www.bbb.org/us/ca/irvine/profile/debt-relief-services/pacific-associates-1126-13132048";
+const GOOGLE_URL =
+  "https://www.google.com/search?sca_esv=fb6d196bfde403ac&rlz=1C1HKFL_enUS1215US1215&sxsrf=APpeQnuknd6lBpkbggbElPoLk9HulbQ2IA:1782931120860&si=APenkKn5T4YN59srr511wD6k6Pufj9DEzRUvB1XJSwUeeT5afh6cd2YIOS9tqlyvfP2lMBNLRRr-Plqgy3BiG4QlLOrQvlh_f2PaT3pNiwffctqL0A1CyqhOzlxcqR6jMZnF5o21DpL9umuPOSoIpqhRZ6iELFrTHA%3D%3D&q=Pacific+Associates+Corporation+Reviews";
+const YELP_URL =
+  "https://www.yelp.com/biz/pacific-associates-irvine-3";
 
 const SUBMIT_ENDPOINT = "/api/submit";
 
@@ -62,9 +70,41 @@ export default function QuoteForm() {
         <h3 className="text-2xl font-bold text-ink mb-3" style={{ fontFamily: "var(--font-cormorant)" }}>
           Thank You!
         </h3>
-        <p className="text-ink-mid leading-relaxed">
-          You will be receiving your quote within the next 24 hours.
+        <p className="text-ink-mid leading-relaxed mb-6">
+          We&rsquo;ll be in touch soon. In the meantime, see why clients trust Pacific Associates:
         </p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <a
+            href={BBB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-5 py-3 rounded bg-[#C9922A] text-white font-semibold hover:bg-[#A87820] transition-all"
+          >
+            BBB reviews
+          </a>
+          <a
+            href={GOOGLE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-5 py-3 rounded border border-navy text-navy font-semibold hover:bg-navy hover:text-white transition-all"
+          >
+            Google reviews
+          </a>
+          <a
+            href={YELP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-5 py-3 rounded border border-navy text-navy font-semibold hover:bg-navy hover:text-white transition-all"
+          >
+            Yelp reviews
+          </a>
+          <Link
+            href="/videos"
+            className="px-5 py-3 rounded bg-navy text-white font-semibold hover:bg-[#243860] transition-all"
+          >
+            Watch our videos
+          </Link>
+        </div>
       </div>
     );
   }
