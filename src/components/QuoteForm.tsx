@@ -62,12 +62,8 @@ export default function QuoteForm() {
         <h3 className="text-2xl font-bold text-ink mb-3" style={{ fontFamily: "var(--font-cormorant)" }}>
           Thank You!
         </h3>
-        <p className="text-ink-mid mb-6 leading-relaxed">
+        <p className="text-ink-mid leading-relaxed">
           You will be receiving your quote within the next 24 hours.
-        </p>
-        <p className="text-ink font-semibold">
-          Call now to receive $100 off your first payment:{" "}
-          <a href="tel:8662957500" className="text-[#C9922A] hover:underline">866-295-7500</a>
         </p>
       </div>
     );
