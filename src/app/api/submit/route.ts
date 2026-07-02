@@ -8,6 +8,34 @@ const FROM = "Shain Mercer <shainm@pacificassoc.com>";
 // The From address stays on the Resend-verified pacificassoc.com domain.
 const NOTIFY_TO = "shainm@pacificassociates.com";
 const PRIVACY_URL = "https://www.pacificassoc.com/privacy";
+const TURNSTILE_VERIFY_URL =
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+
+// Verify a Cloudflare Turnstile token server-side. Returns true only when
+// Cloudflare confirms the token is valid.
+async function verifyTurnstile(token: string, ip?: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    console.error("submit: TURNSTILE_SECRET_KEY not configured");
+    return false;
+  }
+  const body = new URLSearchParams();
+  body.append("secret", secret);
+  body.append("response", token);
+  if (ip) body.append("remoteip", ip);
+  try {
+    const res = await fetch(TURNSTILE_VERIFY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    });
+    const outcome = (await res.json()) as { success?: boolean };
+    return outcome.success === true;
+  } catch (e) {
+    console.error("submit: turnstile verification request failed", e);
+    return false;
+  }
+}
 
 interface Creditor {
   name?: string;
@@ -128,6 +156,23 @@ export async function POST(req: Request) {
     data = await req.json();
   } catch {
     return NextResponse.json({ ok: false, error: "invalid body" }, { status: 400 });
+  }
+
+  // Bot protection: verify the Turnstile token before doing anything else.
+  const token = String(data.turnstileToken || "");
+  if (!token) {
+    return NextResponse.json(
+      { ok: false, error: "missing captcha token" },
+      { status: 400 },
+    );
+  }
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const human = await verifyTurnstile(token, ip);
+  if (!human) {
+    return NextResponse.json(
+      { ok: false, error: "captcha verification failed" },
+      { status: 400 },
+    );
   }
 
   const email = String(data.email || "").trim();

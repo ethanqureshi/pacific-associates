@@ -1,7 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { PlusCircle, CheckCircle } from "lucide-react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 const BBB_URL =
   "https://www.bbb.org/us/ca/irvine/profile/debt-relief-services/pacific-associates-1126-13132048";
@@ -24,6 +27,8 @@ export default function QuoteForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [consent, setConsent] = useState(false);
+  const [token, setToken] = useState("");
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const [creditors, setCreditors] = useState<Creditor[]>([
     { name: "", balance: "" },
     { name: "", balance: "" },
@@ -41,12 +46,17 @@ export default function QuoteForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!token) {
+      setError("Please complete the verification check.");
+      return;
+    }
     setLoading(true);
     setError("");
     const data = new FormData(e.currentTarget);
     const payload: Record<string, unknown> = {};
     data.forEach((v, k) => { payload[k] = v; });
     payload.creditors = creditors.filter((c) => c.name || c.balance);
+    payload.turnstileToken = token;
     try {
       const res = await fetch(SUBMIT_ENDPOINT, {
         method: "POST",
@@ -57,9 +67,13 @@ export default function QuoteForm() {
         setSubmitted(true);
       } else {
         setError("Something went wrong. Please call us at 866-295-7500.");
+        turnstileRef.current?.reset();
+        setToken("");
       }
     } catch {
       setError("Unable to submit. Please call us at 866-295-7500.");
+      turnstileRef.current?.reset();
+      setToken("");
     } finally {
       setLoading(false);
     }
@@ -188,11 +202,20 @@ export default function QuoteForm() {
         </span>
       </label>
 
+      <Turnstile
+        ref={turnstileRef}
+        siteKey={TURNSTILE_SITE_KEY}
+        onSuccess={setToken}
+        onError={() => setToken("")}
+        onExpire={() => setToken("")}
+        options={{ theme: "light" }}
+      />
+
       {error && <p className="text-red-600 text-sm">{error}</p>}
 
       <button
         type="submit"
-        disabled={loading || !consent}
+        disabled={loading || !consent || !token}
         className="w-full py-3.5 rounded bg-[#C9922A] text-white font-bold text-lg hover:bg-[#A87820] transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? "Submitting..." : "Get My Free Quote"}
