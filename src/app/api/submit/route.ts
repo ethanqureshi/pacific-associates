@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import {
+  checkOrigin,
+  corsHeaders,
+  corsJson,
+  getClientIp,
+  rateLimit,
+} from "@/lib/api-security";
 
 export const runtime = "nodejs";
 
@@ -51,6 +58,38 @@ const esc = (s: unknown) =>
 
 const toNumber = (v: unknown) =>
   parseFloat(String(v ?? "").replace(/[^0-9.]/g, "")) || 0;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Validate a quote submission. Returns true only when every required field is
+// present, well-formed, and within its length limit.
+function validateSubmission(data: Record<string, unknown>): boolean {
+  const firstName = String(data.firstName ?? "").trim();
+  const lastName = String(data.lastName ?? "").trim();
+  const email = String(data.email ?? "").trim();
+  const phone = String(data.phone ?? "").trim();
+  const zip = String(data.zip ?? "").trim();
+
+  if (!firstName || !lastName || !email || !phone || !zip) return false;
+  if (firstName.length > 100 || lastName.length > 100) return false;
+  if (email.length > 200 || !EMAIL_RE.test(email)) return false;
+  // Phone must be numeric once common formatting characters are removed.
+  if (!/^\d{7,15}$/.test(phone.replace(/[\s().+-]/g, ""))) return false;
+  if (!/^\d{5}(-\d{4})?$/.test(zip)) return false;
+
+  const creditors = Array.isArray(data.creditors) ? data.creditors : [];
+  if (creditors.length > 4) return false;
+  for (const c of creditors as Creditor[]) {
+    const name = String(c?.name ?? "").trim();
+    const balance = String(c?.balance ?? "").trim();
+    if (name.length > 100) return false;
+    // Balances are numeric only (currency symbols/commas stripped first).
+    if (balance && !/^\d+(\.\d+)?$/.test(balance.replace(/[$,\s]/g, ""))) {
+      return false;
+    }
+  }
+  return true;
+}
 
 // Follow-up email sent TO the lead.
 function leadEmail() {
@@ -150,84 +189,114 @@ function notifyEmail(
 </html>`;
 }
 
-export async function POST(req: Request) {
-  let data: Record<string, unknown>;
+// Preflight for cross-origin callers.
+export async function OPTIONS(req: Request): Promise<NextResponse> {
+  const { allowed, origin } = checkOrigin(req);
+  if (!allowed) {
+    return corsJson({ ok: false, error: "forbidden" }, { status: 403, origin: null });
+  }
+  return new NextResponse(null, { status: 204, headers: corsHeaders(origin) });
+}
+
+export async function POST(req: Request): Promise<NextResponse> {
+  // 1. CORS: reject cross-origin browser requests from other sites.
+  const { allowed, origin } = checkOrigin(req);
+  if (!allowed) {
+    return corsJson({ ok: false, error: "forbidden" }, { status: 403, origin: null });
+  }
+
+  // 2. Rate limit: 10 requests per IP per hour.
+  const ip = getClientIp(req);
+  const limit = rateLimit(`submit:${ip}`, 10, 60 * 60 * 1000);
+  if (!limit.ok) {
+    return corsJson(
+      { ok: false, error: "too many requests" },
+      { status: 429, origin, headers: { "Retry-After": String(limit.retryAfter) } },
+    );
+  }
+
   try {
-    data = await req.json();
-  } catch {
-    return NextResponse.json({ ok: false, error: "invalid body" }, { status: 400 });
+    let data: Record<string, unknown>;
+    try {
+      data = await req.json();
+    } catch {
+      return corsJson({ ok: false, error: "invalid request" }, { status: 400, origin });
+    }
+
+    // 3. Bot protection: verify the Turnstile token before processing anything.
+    const token = String(data.turnstileToken || "");
+    if (!token) {
+      return corsJson(
+        { ok: false, error: "verification required" },
+        { status: 400, origin },
+      );
+    }
+    const human = await verifyTurnstile(token, ip === "unknown" ? undefined : ip);
+    if (!human) {
+      return corsJson(
+        { ok: false, error: "verification failed" },
+        { status: 400, origin },
+      );
+    }
+
+    // 4. Input validation: reject malformed or oversized submissions.
+    if (!validateSubmission(data)) {
+      return corsJson({ ok: false, error: "invalid input" }, { status: 400, origin });
+    }
+
+    const email = String(data.email).trim();
+
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error("submit: RESEND_API_KEY not configured");
+      return corsJson(
+        { ok: false, error: "service unavailable" },
+        { status: 500, origin },
+      );
+    }
+
+    const creditors: Creditor[] = Array.isArray(data.creditors)
+      ? (data.creditors as Creditor[])
+      : [];
+    const totalBalance = creditors.reduce((sum, c) => sum + toNumber(c.balance), 0);
+    const monthly = Math.max(0, Math.round(totalBalance / 36));
+    const monthlyFmt = monthly.toLocaleString("en-US");
+    const totalFmt = Math.round(totalBalance).toLocaleString("en-US");
+
+    const resend = new Resend(apiKey);
+
+    const [leadResult, notifyResult] = await Promise.allSettled([
+      resend.emails.send({
+        from: FROM,
+        to: email,
+        replyTo: NOTIFY_TO,
+        subject: "Reduce your debt faster with Pacific Associates",
+        html: leadEmail(),
+      }),
+      resend.emails.send({
+        from: FROM,
+        to: NOTIFY_TO,
+        replyTo: email,
+        subject: `New free quote lead: ${data.firstName ?? ""} ${data.lastName ?? ""}`.trim(),
+        html: notifyEmail(data, creditors, totalFmt, monthlyFmt),
+      }),
+    ]);
+
+    const leadOk = leadResult.status === "fulfilled" && !leadResult.value.error;
+    const notifyOk = notifyResult.status === "fulfilled" && !notifyResult.value.error;
+
+    // Succeed as long as the lead notification reached Shain (lead capture is
+    // the priority). Per-email status is logged server-side only; the client
+    // response stays generic.
+    if (!notifyOk) {
+      console.error("submit: notification email failed", notifyResult);
+      return corsJson({ ok: false, error: "delivery failed" }, { status: 502, origin });
+    }
+    if (!leadOk) console.error("submit: lead follow-up email failed", leadResult);
+
+    return corsJson({ ok: true }, { origin });
+  } catch (err) {
+    console.error("submit: unexpected error", err);
+    return corsJson({ ok: false, error: "internal error" }, { status: 500, origin });
   }
-
-  // Bot protection: verify the Turnstile token before doing anything else.
-  const token = String(data.turnstileToken || "");
-  if (!token) {
-    return NextResponse.json(
-      { ok: false, error: "missing captcha token" },
-      { status: 400 },
-    );
-  }
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const human = await verifyTurnstile(token, ip);
-  if (!human) {
-    return NextResponse.json(
-      { ok: false, error: "captcha verification failed" },
-      { status: 400 },
-    );
-  }
-
-  const email = String(data.email || "").trim();
-  if (!email) {
-    return NextResponse.json({ ok: false, error: "missing email" }, { status: 400 });
-  }
-
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json(
-      { ok: false, error: "email service not configured" },
-      { status: 500 },
-    );
-  }
-
-  const creditors: Creditor[] = Array.isArray(data.creditors)
-    ? (data.creditors as Creditor[])
-    : [];
-  const totalBalance = creditors.reduce((sum, c) => sum + toNumber(c.balance), 0);
-  const monthly = Math.max(0, Math.round(totalBalance / 36));
-  const monthlyFmt = monthly.toLocaleString("en-US");
-  const totalFmt = Math.round(totalBalance).toLocaleString("en-US");
-
-  const resend = new Resend(apiKey);
-
-  const [leadResult, notifyResult] = await Promise.allSettled([
-    resend.emails.send({
-      from: FROM,
-      to: email,
-      replyTo: NOTIFY_TO,
-      subject: "Reduce your debt faster with Pacific Associates",
-      html: leadEmail(),
-    }),
-    resend.emails.send({
-      from: FROM,
-      to: NOTIFY_TO,
-      replyTo: email,
-      subject: `New free quote lead: ${data.firstName ?? ""} ${data.lastName ?? ""}`.trim(),
-      html: notifyEmail(data, creditors, totalFmt, monthlyFmt),
-    }),
-  ]);
-
-  const leadOk = leadResult.status === "fulfilled" && !leadResult.value.error;
-  const notifyOk = notifyResult.status === "fulfilled" && !notifyResult.value.error;
-
-  // Succeed as long as the lead notification reached Shain (lead capture is
-  // the priority); report per-email status so failures are visible in logs.
-  if (!notifyOk) {
-    console.error("submit: notification email failed", notifyResult);
-    return NextResponse.json(
-      { ok: false, leadOk, notifyOk },
-      { status: 502 },
-    );
-  }
-  if (!leadOk) console.error("submit: lead follow-up email failed", leadResult);
-
-  return NextResponse.json({ ok: true, leadOk, notifyOk });
 }
