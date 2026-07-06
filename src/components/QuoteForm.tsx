@@ -22,6 +22,12 @@ interface Creditor {
   balance: string;
 }
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
 export default function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -64,6 +70,7 @@ export default function QuoteForm() {
         body: JSON.stringify(payload),
       });
       if (res.ok) {
+        window.fbq?.("track", "Lead");
         setSubmitted(true);
       } else {
         setError("Something went wrong. Please call us at 866-295-7500.");
