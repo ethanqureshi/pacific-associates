@@ -44,20 +44,12 @@ async function verifyTurnstile(token: string, ip?: string): Promise<boolean> {
   }
 }
 
-interface Creditor {
-  name?: string;
-  balance?: string;
-}
-
 const esc = (s: unknown) =>
   String(s ?? "").replace(
     /[&<>"']/g,
     (c) =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!,
   );
-
-const toNumber = (v: unknown) =>
-  parseFloat(String(v ?? "").replace(/[^0-9.]/g, "")) || 0;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -77,17 +69,6 @@ function validateSubmission(data: Record<string, unknown>): boolean {
   if (!/^\d{7,15}$/.test(phone.replace(/[\s().+-]/g, ""))) return false;
   if (!/^\d{5}(-\d{4})?$/.test(zip)) return false;
 
-  const creditors = Array.isArray(data.creditors) ? data.creditors : [];
-  if (creditors.length > 4) return false;
-  for (const c of creditors as Creditor[]) {
-    const name = String(c?.name ?? "").trim();
-    const balance = String(c?.balance ?? "").trim();
-    if (name.length > 100) return false;
-    // Balances are numeric only (currency symbols/commas stripped first).
-    if (balance && !/^\d+(\.\d+)?$/.test(balance.replace(/[$,\s]/g, ""))) {
-      return false;
-    }
-  }
   return true;
 }
 
@@ -150,21 +131,7 @@ function leadEmail() {
 }
 
 // Notification email sent TO Shain with all lead details.
-function notifyEmail(
-  d: Record<string, unknown>,
-  creditors: Creditor[],
-  totalFmt: string,
-  monthlyFmt: string,
-) {
-  const rows =
-    creditors
-      .filter((c) => c.name || c.balance)
-      .map(
-        (c) =>
-          `<tr><td style="padding:6px 10px;border:1px solid #E8E2D9;">${esc(c.name || "—")}</td><td style="padding:6px 10px;border:1px solid #E8E2D9;">${esc(c.balance || "—")}</td></tr>`,
-      )
-      .join("") ||
-    `<tr><td colspan="2" style="padding:6px 10px;border:1px solid #E8E2D9;color:#888;">None provided</td></tr>`;
+function notifyEmail(d: Record<string, unknown>) {
   const field = (label: string, value: unknown) =>
     `<tr><td style="padding:6px 10px;border:1px solid #E8E2D9;font-weight:bold;background:#F3F0EB;">${label}</td><td style="padding:6px 10px;border:1px solid #E8E2D9;">${esc(value)}</td></tr>`;
   return `<!DOCTYPE html>
@@ -177,13 +144,6 @@ function notifyEmail(
       ${field("Email", d.email)}
       ${field("Phone", d.phone)}
       ${field("Zip Code", d.zip)}
-      ${field("Total Balance", "$" + totalFmt)}
-      ${field("Est. Monthly (÷36)", "$" + monthlyFmt)}
-    </table>
-    <h3 style="font-family:Georgia,serif;color:#1B2B4B;margin:20px 0 8px;">Creditors</h3>
-    <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:600px;font-size:14px;">
-      <tr><th style="padding:6px 10px;border:1px solid #E8E2D9;text-align:left;background:#F3F0EB;">Creditor</th><th style="padding:6px 10px;border:1px solid #E8E2D9;text-align:left;background:#F3F0EB;">Balance</th></tr>
-      ${rows}
     </table>
   </body>
 </html>`;
@@ -255,14 +215,6 @@ export async function POST(req: Request): Promise<NextResponse> {
       );
     }
 
-    const creditors: Creditor[] = Array.isArray(data.creditors)
-      ? (data.creditors as Creditor[])
-      : [];
-    const totalBalance = creditors.reduce((sum, c) => sum + toNumber(c.balance), 0);
-    const monthly = Math.max(0, Math.round(totalBalance / 36));
-    const monthlyFmt = monthly.toLocaleString("en-US");
-    const totalFmt = Math.round(totalBalance).toLocaleString("en-US");
-
     const resend = new Resend(apiKey);
 
     const [leadResult, notifyResult] = await Promise.allSettled([
@@ -278,7 +230,7 @@ export async function POST(req: Request): Promise<NextResponse> {
         to: NOTIFY_TO,
         replyTo: email,
         subject: `New free quote lead: ${data.firstName ?? ""} ${data.lastName ?? ""}`.trim(),
-        html: notifyEmail(data, creditors, totalFmt, monthlyFmt),
+        html: notifyEmail(data),
       }),
     ]);
 

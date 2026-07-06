@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { PlusCircle, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -17,11 +17,6 @@ const TRUSTLINK_URL =
 
 const SUBMIT_ENDPOINT = "/api/submit";
 
-interface Creditor {
-  name: string;
-  balance: string;
-}
-
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
@@ -35,21 +30,6 @@ export default function QuoteForm() {
   const [consent, setConsent] = useState(false);
   const [token, setToken] = useState("");
   const turnstileRef = useRef<TurnstileInstance>(null);
-  const [creditors, setCreditors] = useState<Creditor[]>([
-    { name: "", balance: "" },
-    { name: "", balance: "" },
-  ]);
-
-  const addCreditor = () => {
-    if (creditors.length < 4) setCreditors([...creditors, { name: "", balance: "" }]);
-  };
-
-  const updateCreditor = (i: number, field: keyof Creditor, value: string) => {
-    const updated = [...creditors];
-    updated[i][field] = value;
-    setCreditors(updated);
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!token) {
@@ -61,7 +41,6 @@ export default function QuoteForm() {
     const data = new FormData(e.currentTarget);
     const payload: Record<string, unknown> = {};
     data.forEach((v, k) => { payload[k] = v; });
-    payload.creditors = creditors.filter((c) => c.name || c.balance);
     payload.turnstileToken = token;
     try {
       const res = await fetch(SUBMIT_ENDPOINT, {
@@ -165,35 +144,6 @@ export default function QuoteForm() {
           <label className="block text-sm font-medium text-ink mb-1">Zip Code *</label>
           <input name="zip" type="text" required placeholder="92612" maxLength={5} className="w-full border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors" />
         </div>
-      </div>
-
-      <div className="border-t border-warm-line pt-4">
-        <h4 className="font-semibold text-ink mb-3">List all your creditors with the approximate balance</h4>
-        <div className="space-y-2">
-          {creditors.map((creditor, i) => (
-            <div key={i} className="grid grid-cols-2 gap-3">
-              <input
-                type="text"
-                placeholder={`Creditor ${i + 1} Name`}
-                value={creditor.name}
-                onChange={(e) => updateCreditor(i, "name", e.target.value)}
-                className="border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors"
-              />
-              <input
-                type="text"
-                placeholder="Balance ($)"
-                value={creditor.balance}
-                onChange={(e) => updateCreditor(i, "balance", e.target.value)}
-                className="border border-[#E8E2D9] rounded px-4 py-3 text-ink focus:outline-none focus:border-[#C9922A] transition-colors"
-              />
-            </div>
-          ))}
-        </div>
-        {creditors.length < 4 && (
-          <button type="button" onClick={addCreditor} className="mt-3 flex items-center gap-2 text-[#C9922A] text-sm font-medium hover:text-[#A87820] transition-colors">
-            <PlusCircle size={18} /> Add Creditor
-          </button>
-        )}
       </div>
 
       <label className="flex items-start gap-3 text-ink-lt text-xs leading-relaxed cursor-pointer">
